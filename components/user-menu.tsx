@@ -84,7 +84,6 @@ function UserMenu() {
                 </div>
               </div>
             </DropdownMenuLabel>
-            <DropdownMenuSeparator />
 
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
