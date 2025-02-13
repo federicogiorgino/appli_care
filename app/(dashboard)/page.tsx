@@ -5,7 +5,7 @@ async function RootPage() {
   const user = await currentUser()
   if (!user) redirect('/sign-in')
 
-  return <div>{user.fullName}</div>
+  return <div></div>
 }
 
 export default RootPage

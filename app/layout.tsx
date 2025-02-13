@@ -1,7 +1,9 @@
 import { ClerkProvider } from '@clerk/nextjs'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { Toaster } from 'sonner'
 
+import { Providers } from '@/components/providers'
 import { ThemeProvider } from '@/components/theme-provider'
 
 import './globals.css'
@@ -22,7 +24,11 @@ function RootLayout({
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
         <body className={inter.className}>
-          <ThemeProvider>{children}</ThemeProvider>
+          <Toaster className={inter.className} />
+
+          <Providers>
+            <ThemeProvider>{children}</ThemeProvider>
+          </Providers>
         </body>
       </html>
     </ClerkProvider>
