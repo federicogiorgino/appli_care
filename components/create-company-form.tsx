@@ -32,7 +32,7 @@ import { CompanyValues } from '@/types/job-application'
 
 function CreateCompanyForm() {
   const queryClient = useQueryClient()
-  const { closeDialog } = useDialog('createCompanyDialog')
+  const { closeDialog } = useDialog('companyCreateDialog')
 
   const form = useForm<CompanyValues>({
     resolver: zodResolver(companySchema),
@@ -46,9 +46,9 @@ function CreateCompanyForm() {
     mutationFn: createCompany,
     onSuccess: (data) => {
       if (data.status === 'success') {
+        closeDialog()
         queryClient.invalidateQueries({ queryKey: ['companies'] })
         toast.success('Company has been added.')
-        closeDialog()
         form.reset()
       } else {
         toast.error('Unable to add company.')

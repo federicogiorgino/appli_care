@@ -16,7 +16,7 @@ import { UserMenu } from './user-menu'
 import useDialog from '@/hooks/use-dialog'
 
 function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const jobApplicationDialog = useDialog('jobApplicationDialog')
+  const { openDialog } = useDialog('jobApplicationCreateDialog')
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -28,9 +28,7 @@ function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton
-              onClick={() => jobApplicationDialog.openDialog()}
-            >
+            <SidebarMenuButton onClick={() => openDialog()}>
               <Plus />
               <span>New Job Application</span>
             </SidebarMenuButton>

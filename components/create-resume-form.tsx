@@ -6,7 +6,8 @@ import { Loader2 } from 'lucide-react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
-import * as z from 'zod'
+
+import { convertToBase64 } from '@/lib/utils'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -22,26 +23,16 @@ import { Input } from '@/components/ui/input'
 
 import { createResume } from '@/actions/resumes'
 import useDialog from '@/hooks/use-dialog'
+import { resumeSchema } from '@/schemas/job-application'
 import { ResumeValues } from '@/types/job-application'
-
-const resumeSchema = z.object({
-  name: z.string().min(2, {
-    message: 'Name must be at least 2 characters.',
-  }),
-  url: z.string().url({
-    message: 'Please upload a curriculum file.',
-  }),
-})
-
-type ResumeFormValues = z.infer<typeof resumeSchema>
 
 function CreateResumeForm() {
   const [isUploading, setIsUploading] = useState(false)
-  const [pdfFileName, setPdfFileName] = useState<string | null>(null)
+  const [_, setPdfFileName] = useState<string | null>(null)
   const queryClient = useQueryClient()
   const { closeDialog } = useDialog('resumeCreateDialog')
 
-  const form = useForm<ResumeFormValues>({
+  const form = useForm<ResumeValues>({
     resolver: zodResolver(resumeSchema),
     defaultValues: {
       name: '',
@@ -56,10 +47,11 @@ function CreateResumeForm() {
         queryClient.invalidateQueries({ queryKey: ['resumes'] })
         toast.success('Resume has been added.')
         resetFileInput()
-
+        closeDialog()
         form.reset()
       } else {
         toast.error('Unable to add resume.')
+        closeDialog()
       }
     },
     onError: () => {
@@ -90,7 +82,6 @@ function CreateResumeForm() {
         const base64String = await convertToBase64(file)
         form.setValue('url', base64String)
         setPdfFileName(file.name)
-        // toast.success('File uploaded successfully')
       } catch (error) {
         console.error('Error converting file to base64:', error)
         toast.error(
@@ -99,58 +90,6 @@ function CreateResumeForm() {
       } finally {
         setIsUploading(false)
       }
-    }
-  }
-
-  const convertToBase64 = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader()
-      reader.readAsDataURL(file)
-      reader.onload = () => resolve(reader.result as string)
-      reader.onerror = (error) => reject(error)
-    })
-  }
-
-  const handleDownloadPdf = () => {
-    try {
-      const base64Data = form.getValues('url')
-      if (!base64Data) {
-        throw new Error('No PDF data available for download.')
-      }
-
-      // Remove the data URL prefix if present
-      const base64Content = base64Data.includes('base64,')
-        ? base64Data.split('base64,')[1]
-        : base64Data
-
-      // Decode the base64 string
-      const binaryString = window.atob(base64Content)
-      const bytes = new Uint8Array(binaryString.length)
-      for (let i = 0; i < binaryString.length; i++) {
-        bytes[i] = binaryString.charCodeAt(i)
-      }
-
-      // Create a Blob from the bytes
-      const blob = new Blob([bytes], { type: 'application/pdf' })
-
-      // Create a download link
-      const url = window.URL.createObjectURL(blob)
-      const link = document.createElement('a')
-      link.href = url
-      link.download = pdfFileName || 'resume.pdf'
-
-      // Append to the document, click, and remove
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
-
-      // Clean up the URL object
-      window.URL.revokeObjectURL(url)
-
-      toast.success('PDF Downloaded successfully')
-    } catch (error) {
-      console.error('Error downloading PDF:', error)
-      toast.error('There was a problem downloading your PDF. Please try again.')
     }
   }
 
@@ -164,9 +103,11 @@ function CreateResumeForm() {
             <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input placeholder="John Doe" {...field} />
+                <Input
+                  placeholder="Amazone Java Developer Resume January 2024"
+                  {...field}
+                />
               </FormControl>
-              <FormDescription>Enter your full name</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -203,21 +144,10 @@ function CreateResumeForm() {
             Cancel
           </Button>
           <Button type="submit" disabled={mutation.isPending}>
-            {!mutation.isPending && 'Create'}
+            {!mutation.isPending && 'Add'}
             {mutation.isPending && <Loader2 className="animate-spin" />}
           </Button>
         </div>
-        {/* <div className="flex space-x-4">
-          <Button type="submit" disabled={isUploading}>
-            {!mutation.isPending && 'Create'}
-            {mutation.isPending && <Loader2 className="animate-spin" />}
-          </Button> */}
-        {/* {pdfFileName && (
-            <Button type="button" onClick={handleDownloadPdf}>
-              Download PDF
-            </Button>
-          )} */}
-        {/* </div> */}
       </form>
     </Form>
   )

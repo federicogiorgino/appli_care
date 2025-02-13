@@ -48,8 +48,8 @@ function CreateContactForm() {
       if (data.status === 'success') {
         queryClient.invalidateQueries({ queryKey: ['contacts'] })
         toast.success('Contact has been created.')
-        form.reset()
         closeDialog()
+        form.reset()
       } else {
         toast.error('Unable to create contact.')
       }
@@ -73,7 +73,7 @@ function CreateContactForm() {
             <FormItem>
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input placeholder="Enter company name" {...field} />
+                <Input placeholder="Enter contact name" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -147,7 +147,7 @@ function CreateContactForm() {
             Cancel
           </Button>
           <Button type="submit" disabled={mutation.isPending}>
-            {!mutation.isPending && 'Create'}
+            {!mutation.isPending && 'Add'}
             {mutation.isPending && <Loader2 className="animate-spin" />}
           </Button>
         </div>

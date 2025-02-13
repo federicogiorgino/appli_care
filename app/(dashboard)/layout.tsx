@@ -18,6 +18,7 @@ function DashboardLayout({
         <main className="p-4">
           <DialogsProvider />
           <SidebarTrigger />
+
           <div className="px-4 pt-4">{children}</div>
         </main>
       </SidebarInset>

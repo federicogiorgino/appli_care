@@ -96,7 +96,7 @@ function CreateCoverLetterForm() {
           <Button
             type="button"
             variant="outline"
-            onClick={() => closeDialog()}
+            onClick={closeDialog}
             disabled={mutation.isPending}
           >
             Cancel

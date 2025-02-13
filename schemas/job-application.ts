@@ -54,7 +54,7 @@ export const jobApplicationSchema = z.object({
   ]),
   source: z.string().optional(),
   resumeId: z.string().optional(),
-  coverLetterUsed: z.string().optional(),
+  coverLetterId: z.string().optional(),
   interviewNotes: z.array(z.string()).min(1, 'At least one note is required'),
   interviewStage: z.enum([
     JobInterviewStage.TECHNICAL_INTERVIEW,
@@ -71,7 +71,16 @@ export const resumeSchema = z.object({
   name: z.string().min(2, {
     message: 'Title must be at least 2 characters.',
   }),
-  url: z.string().url({
+  url: z.string({
     message: 'Please upload a curriculum file.',
+  }),
+})
+
+export const coverLetterSchema = z.object({
+  name: z.string().min(2, {
+    message: 'Name must be at least 2 characters.',
+  }),
+  body: z.string().min(100, {
+    message: 'Body must be at least 100 characters.',
   }),
 })

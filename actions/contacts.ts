@@ -21,6 +21,7 @@ export async function getContacts() {
       },
       orderBy: { name: 'asc' },
     })
+
     return { status: 'success', data: contacts }
   } catch (error) {
     return { status: 'error', error: 'Error fetching contacts' }
@@ -50,6 +51,6 @@ export async function createContact(data: ContactValues) {
     return { status: 'success' }
   } catch (error) {
     console.error(error)
-    return { status: 'error', error: 'Error creating contact' }
+    return { status: 'error', error: 'Error adding contact' }
   }
 }
