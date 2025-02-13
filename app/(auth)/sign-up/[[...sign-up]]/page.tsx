@@ -21,7 +21,7 @@ import { Label } from '@/components/ui/label'
 
 function SignUpPage() {
   return (
-    <div className="grid w-full grow items-center px-4 sm:justify-center">
+    <div>
       <SignUp.Root>
         <Clerk.Loading>
           {(isGlobalLoading) => (
@@ -118,9 +118,9 @@ function SignUpPage() {
                         </Button>
                       </SignUp.Action>
                       <Button variant="link" size="sm" asChild>
-                        <Clerk.Link navigate="sign-in">
+                        <Link href="/sign-in">
                           Already have an account? Sign in
-                        </Clerk.Link>
+                        </Link>
                       </Button>
                     </div>
                   </CardFooter>
