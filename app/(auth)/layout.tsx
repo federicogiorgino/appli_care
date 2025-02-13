@@ -3,11 +3,7 @@ import React from 'react'
 
 import { ThemeToggle } from '@/components/theme-toggle'
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex h-screen w-full">
       <div className="flex w-full items-center justify-center lg:w-1/2">
@@ -20,3 +16,5 @@ export default function RootLayout({
     </div>
   )
 }
+
+export default AuthLayout
