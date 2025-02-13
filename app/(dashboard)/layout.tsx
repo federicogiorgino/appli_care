@@ -1,4 +1,5 @@
 import { AppSidebar } from '@/components/app-sidebar'
+import { DialogsProvider } from '@/components/dialogs-provider'
 import {
   SidebarInset,
   SidebarProvider,
@@ -15,6 +16,7 @@ function DashboardLayout({
       <AppSidebar variant="inset" />
       <SidebarInset>
         <main className="p-4">
+          <DialogsProvider />
           <SidebarTrigger />
           <div className="px-4 pt-4">{children}</div>
         </main>
