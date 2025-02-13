@@ -1,25 +1,28 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { ClerkProvider } from '@clerk/nextjs'
+import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
 
-import "./globals.css";
+import './globals.css'
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: "Reveala.xyz",
-  description: "The job seeker best friend",
-};
+  title: 'Reveala.xyz',
+  description: 'The job seeker best friend',
+}
 
 function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>{children}</body>
-    </html>
-  );
+    <ClerkProvider>
+      <html lang="en" suppressHydrationWarning>
+        <body className={inter.className}>{children}</body>
+      </html>
+    </ClerkProvider>
+  )
 }
 
-export default RootLayout;
+export default RootLayout
