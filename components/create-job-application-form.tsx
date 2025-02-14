@@ -5,6 +5,7 @@ import {
   CoverLetter,
   JobApplicationStatus,
   JobInterviewStage,
+  JobLocation,
   JobType,
   Resume,
 } from '@prisma/client'
@@ -43,6 +44,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 
+import { RadioGroup, RadioGroupItem } from './ui/radio-group'
 import { createJobApplication } from '@/actions/job-applications'
 import { useCompanies } from '@/hooks/use-companies'
 import { useContacts } from '@/hooks/use-contacts'
@@ -107,6 +109,7 @@ function CreateJobApplicationForm() {
       applicationStatus: JobApplicationStatus.APPLIED,
       interviewStage: JobInterviewStage.OTHER,
       interviewNotes: [],
+      location: JobLocation.OTHER,
     },
   })
   const { trigger } = form
@@ -249,10 +252,36 @@ function CreateJobApplicationForm() {
                   <FormItem>
                     <FormLabel>Location</FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder="123 Cool Street, Cool Place"
-                        {...field}
-                      />
+                      <RadioGroup
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                        className="flex flex-col space-y-1"
+                      >
+                        <FormItem className="flex items-center space-x-3 space-y-0">
+                          <FormControl>
+                            <RadioGroupItem value={JobLocation.HYBRID} />
+                          </FormControl>
+                          <FormLabel className="font-normal">Hybrid</FormLabel>
+                        </FormItem>
+                        <FormItem className="flex items-center space-x-3 space-y-0">
+                          <FormControl>
+                            <RadioGroupItem value={JobLocation.ON_SITE} />
+                          </FormControl>
+                          <FormLabel className="font-normal">On-site</FormLabel>
+                        </FormItem>
+                        <FormItem className="flex items-center space-x-3 space-y-0">
+                          <FormControl>
+                            <RadioGroupItem value={JobLocation.REMOTE} />
+                          </FormControl>
+                          <FormLabel className="font-normal">Remote</FormLabel>
+                        </FormItem>
+                        <FormItem className="flex items-center space-x-3 space-y-0">
+                          <FormControl>
+                            <RadioGroupItem value={JobLocation.OTHER} />
+                          </FormControl>
+                          <FormLabel className="font-normal">Other</FormLabel>
+                        </FormItem>
+                      </RadioGroup>
                     </FormControl>
                     <FormMessage />
                   </FormItem>

@@ -9,12 +9,12 @@ generator client {
 
 model JobApplication {
   //BASIC DETAILS
-  id                String   @id @default(cuid())
+  id                String      @id @default(cuid())
   jobTitle          String
-  jobType           JobType  @default(OTHER)
-  location          String?
+  jobType           JobType     @default(OTHER)
+  location          JobLocation @default(OTHER)
   salaryExpectation String?
-  company           Company? @relation(fields: [companyId], references: [id])
+  company           Company?    @relation(fields: [companyId], references: [id])
   companyId         String?
 
   //APPLICATION TRACKING
@@ -141,5 +141,12 @@ enum JobContactRole {
   RECRUITER
   HIRING_MANAGER
   INTERVIEWER
+  OTHER
+}
+
+enum JobLocation {
+  REMOTE
+  ON_SITE
+  HYBRID
   OTHER
 }

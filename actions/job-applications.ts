@@ -8,12 +8,8 @@ import { format } from 'date-fns'
 import { prisma } from '@/lib/prisma'
 
 import { jobApplicationSchema } from '@/schemas/job-application'
-import {
-  JobApplicationStats,
-  JobApplicationValues,
-  JobByTypeStats,
-  JobStats,
-} from '@/types/job-application'
+import { JobApplicationValues } from '@/types/job-application'
+import { JobApplicationStats, JobByTypeStats, JobStats } from '@/types/stats'
 
 export async function createJobApplication(data: JobApplicationValues) {
   try {
@@ -39,5 +35,37 @@ export async function createJobApplication(data: JobApplicationValues) {
     return { status: 'success' }
   } catch (error) {
     return { status: 'error', error: 'Error creating job application' }
+  }
+}
+
+export const getRecentJobApplications = async () => {
+  try {
+    const user = await currentUser()
+
+    if (!user) {
+      return { status: 'error', error: 'Unauthorized' }
+    }
+
+    const recentApplications = await prisma.jobApplication.findMany({
+      where: {
+        userId: user.id,
+      },
+      orderBy: {
+        applicationDate: 'desc',
+      },
+      include: {
+        company: true,
+        contact: true,
+        resume: true,
+      },
+      take: 3,
+    })
+
+    return {
+      status: 'success',
+      data: recentApplications,
+    }
+  } catch (error) {
+    return { status: 'error', error: 'Error fetching recent job applications' }
   }
 }
