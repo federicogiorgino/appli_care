@@ -13,7 +13,7 @@ export type JobByTypeStats = {
   CONTRACT: number
   INTERNSHIP: number
   FREELANCE: number
-  OTHERS: number
+  OTHER: number
 }
 
 export type JobByStatusStats = {
@@ -28,3 +28,5 @@ export type JobApplicationStats = {
   byStatus: JobByStatusStats[]
   byType: JobByTypeStats[]
 }
+
+export type TimeFrame = 'week' | 'month' | 'year'

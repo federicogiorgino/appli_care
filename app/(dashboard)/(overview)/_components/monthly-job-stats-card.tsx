@@ -1,6 +1,6 @@
 import { JobApplicationStatus } from '@prisma/client'
 
-import { cn } from '@/lib/utils'
+import { capitalizeFirstLetter, cn } from '@/lib/utils'
 
 import { JobStatusIcon } from '@/components/job-status-icon'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -25,9 +25,8 @@ function MonthlyJobStatsCard({ jobStats }: MonthlyJobStatsCardProps) {
   return (
     <Card className="space-y-2">
       <CardHeader className="flex flex-row items-center justify-between pb-2">
-        <CardTitle className="text-xl">
-          {jobStats.status.charAt(0).toUpperCase() +
-            jobStats.status.slice(1).toLowerCase()}
+        <CardTitle className="text-2xl font-bold">
+          {capitalizeFirstLetter(jobStats.status)}
         </CardTitle>
 
         <JobStatusIcon status={jobStats.status as JobApplicationStatus} />

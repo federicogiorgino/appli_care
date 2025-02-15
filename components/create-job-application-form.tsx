@@ -140,9 +140,8 @@ function CreateJobApplicationForm() {
           queryKey: ['recentJobApplications'],
         })
         queryClient.invalidateQueries({
-          queryKey: ['yearlyJobApplicationsStats'],
+          queryKey: ['weeklyJobApplicationStats'],
         })
-
         toast.success('Job application has been added.')
         closeDialog()
         form.reset()

@@ -1,15 +1,11 @@
 'use server'
 
 import { currentUser } from '@clerk/nextjs/server'
-import { JobApplicationStatus, JobType } from '@prisma/client'
-import { addMonths, startOfMonth, subMonths } from 'date-fns'
-import { format } from 'date-fns'
 
 import { prisma } from '@/lib/prisma'
 
 import { jobApplicationSchema } from '@/schemas/job-application'
 import { JobApplicationValues } from '@/types/job-application'
-import { JobApplicationStats, JobByTypeStats, JobStats } from '@/types/stats'
 
 export async function createJobApplication(data: JobApplicationValues) {
   try {
@@ -58,7 +54,7 @@ export const getRecentJobApplications = async () => {
         contact: true,
         resume: true,
       },
-      take: 3,
+      take: 8,
     })
 
     return {

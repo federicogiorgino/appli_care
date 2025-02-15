@@ -56,3 +56,11 @@ export const convertToBase64 = (file: File): Promise<string> => {
     reader.onerror = (error) => reject(error)
   })
 }
+
+export function capitalizeFirstLetter(string: string) {
+  let cleanedString = string.replace(/_/g, ' ')
+  return cleanedString
+    .split(' ')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ')
+}
