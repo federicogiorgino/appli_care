@@ -1,7 +1,6 @@
-import '../globals.css'
 import React from 'react'
 
-import { ThemeToggle } from '@/components/theme-toggle'
+import '@/app/globals.css'
 
 function AuthLayout({ children }: { children: React.ReactNode }) {
   return (

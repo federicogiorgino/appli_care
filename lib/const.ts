@@ -38,3 +38,26 @@ export const SIDEBAR_ITEMS = [
     ],
   },
 ]
+
+export const JOB_TYPE_COLORS = {
+  FULL_TIME: '#2E7D32',
+  PART_TIME: '#2E7D32',
+  CONTRACT: '#FFA000',
+  INTERNSHIP: '#E64A19',
+  FREELANCE: '#7B1FA2',
+  OTHERS: '#455A64',
+}
+
+export const JOB_STATUS_COLORS = {
+  APPLIED: '#0288D1',
+  INTERVIEWING: '#F57C00',
+  OFFER: '#43A047',
+  REJECTED: '#D32F2F',
+}
+
+export const JOB_LOCATION_COLORS = {
+  REMOTE: '#1E88E5', // Blue
+  ON_SITE: '#43A047', // Green
+  HYBRID: '#8E24AA', // Purple
+  OTHER: '#757575', // Grey
+}

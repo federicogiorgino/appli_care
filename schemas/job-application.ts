@@ -3,6 +3,7 @@ import {
   JobCompanySize,
   JobContactRole,
   JobInterviewStage,
+  JobLocation,
   JobType,
 } from '@prisma/client'
 import * as z from 'zod'
@@ -41,7 +42,12 @@ export const jobApplicationSchema = z.object({
     JobType.PART_TIME,
     JobType.OTHER,
   ]),
-  location: z.string().optional(),
+  location: z.enum([
+    JobLocation.HYBRID,
+    JobLocation.ON_SITE,
+    JobLocation.OTHER,
+    JobLocation.REMOTE,
+  ]),
   companyId: z.string().optional(),
   salaryExpectation: z.string().optional(),
   applicationDate: z.date().default(() => new Date()),
