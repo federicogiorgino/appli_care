@@ -9,6 +9,8 @@ import {
   Users,
 } from 'lucide-react'
 
+import { FilterLabels, TableType } from '@/components/ui/data-table'
+
 export const SIDEBAR_ITEMS = [
   {
     name: 'Overview',
@@ -60,4 +62,29 @@ export const JOB_LOCATION_COLORS = {
   ON_SITE: '#43A047', // Green
   HYBRID: '#8E24AA', // Purple
   OTHER: '#757575', // Grey
+}
+
+export const tableFilters: Record<TableType, FilterLabels> = {
+  contacts: {
+    name: 'Name',
+    email: 'Email',
+    phoneNumber: 'Phone',
+    role: 'Role',
+  },
+  companies: {
+    name: 'Name',
+    website: 'Website',
+    industry: 'Industry',
+    location: 'Location',
+    size: 'Size',
+  },
+  resumes: {
+    name: 'Name',
+    url: 'Source',
+  },
+  coverLetters: {
+    name: 'Name',
+    body: 'Body',
+  },
+  // jobApplications: {}
 }
