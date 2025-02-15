@@ -9,6 +9,8 @@ import { capitalizeFirstLetter } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 
+import { ContactTableActions } from './contact-table-actions'
+
 const contactsColumns: ColumnDef<Contact>[] = [
   {
     id: 'select',
@@ -17,7 +19,6 @@ const contactsColumns: ColumnDef<Contact>[] = [
         checked={table.getIsAllPageRowsSelected()}
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"
-        className="max-sm:hidden"
       />
     ),
     cell: ({ row }) => (
@@ -25,7 +26,6 @@ const contactsColumns: ColumnDef<Contact>[] = [
         checked={row.getIsSelected()}
         onCheckedChange={(value) => row.toggleSelected(!!value)}
         aria-label="Select row"
-        className="max-sm:hidden"
       />
     ),
     enableSorting: false,
@@ -85,9 +85,7 @@ const contactsColumns: ColumnDef<Contact>[] = [
     enableHiding: false,
     cell: ({ row }) => {
       const contact = row.original
-      //@ts-ignore
-      // return <ContactTableActions contact={contact} />
-      return <div></div>
+      return <ContactTableActions contact={contact} />
     },
   },
 ]

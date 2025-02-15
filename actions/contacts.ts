@@ -54,3 +54,31 @@ export async function createContact(data: ContactValues) {
     return { status: 'error', error: 'Error adding contact' }
   }
 }
+
+export async function updateContact(data: ContactValues, contactId: string) {
+  try {
+    const user = await currentUser()
+
+    if (!user) {
+      return { status: 'error', error: 'Unauthorized' }
+    }
+
+    const validated = contactSchema.safeParse(data)
+
+    if (!validated.success) {
+      return { status: 'error', error: validated.error.errors }
+    }
+
+    await prisma.contact.update({
+      where: {
+        id: contactId,
+        userId: user.id,
+      },
+      data: validated.data,
+    })
+    return { status: 'success' }
+  } catch (error) {
+    console.error(error)
+    return { status: 'error', error: 'Error updating contact' }
+  }
+}

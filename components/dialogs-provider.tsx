@@ -1,3 +1,5 @@
+import { EditContactDialog } from '@/app/(dashboard)/contacts/_components/edit-contact-dialog'
+
 import { CreateCompanyForm } from './create-company-form'
 import { CreateContactForm } from './create-contact-form'
 import { CreateCoverLetterForm } from './create-cover-letter-form'
@@ -8,6 +10,7 @@ import { ControlledDialog } from './ui/controlled-dialog'
 function DialogsProvider() {
   return (
     <>
+      <EditContactDialog />
       <ControlledDialog
         id="jobApplicationCreateDialog"
         title="Add New Job Application"

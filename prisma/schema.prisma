@@ -48,7 +48,7 @@ model JobApplication {
 model Contact {
   id          String         @id @default(cuid())
   name        String
-  email       String?
+  email       String
   phoneNumber String?
   role        JobContactRole @default(OTHER)
   createdAt   DateTime       @default(now())
