@@ -45,7 +45,7 @@ function EditContactForm() {
     onSuccess: (data) => {
       if (data.status === 'success') {
         queryClient.invalidateQueries({ queryKey: ['contacts'] })
-        toast.success('Contact has been created.')
+        toast.success('Contact has been updated.')
         closeDialog()
         form.reset()
       } else {

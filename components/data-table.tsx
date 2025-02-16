@@ -59,7 +59,12 @@ function DataTable<TData, TValue>({
     []
   )
 
-  const { openDialog } = useDialog('contactCreateDialog')
+  const { openDialog: openContactCreatDialog } = useDialog(
+    'contactCreateDialog'
+  )
+  const { openDialog: openCompanyCreateDialog } = useDialog(
+    'companyCreateDialog'
+  )
 
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({})
@@ -99,22 +104,22 @@ function DataTable<TData, TValue>({
           <div className="flex items-center justify-end gap-4">
             <>
               {type === 'contacts' && (
-                <Button variant="outline" onClick={openDialog}>
+                <Button variant="outline" onClick={openContactCreatDialog}>
                   <Plus /> Add New Contact
                 </Button>
               )}
               {type === 'resumes' && (
-                <Button variant="outline">
+                <Button variant="outline" onClick={openContactCreatDialog}>
                   <Plus /> Add New Resume
                 </Button>
               )}
               {type === 'coverLetters' && (
-                <Button variant="outline">
+                <Button variant="outline" onClick={openContactCreatDialog}>
                   <Plus /> Add New Cover Letter
                 </Button>
               )}
               {type === 'companies' && (
-                <Button variant="outline">
+                <Button variant="outline" onClick={openCompanyCreateDialog}>
                   <Plus /> Add New Company
                 </Button>
               )}

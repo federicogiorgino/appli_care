@@ -53,3 +53,55 @@ export async function createCompany(data: CompanyValues) {
     return { status: 'error', error: 'Error adding company' }
   }
 }
+
+export async function updateCompany(data: CompanyValues, contactId: string) {
+  try {
+    const user = await currentUser()
+
+    if (!user) {
+      return { status: 'error', error: 'Unauthorized' }
+    }
+
+    const validated = companySchema.safeParse(data)
+
+    if (!validated.success) {
+      return { status: 'error', error: validated.error.errors }
+    }
+
+    await prisma.company.update({
+      where: {
+        id: contactId,
+        userId: user.id,
+      },
+      data: validated.data,
+    })
+    return { status: 'success' }
+  } catch (error) {
+    return { status: 'error', error: 'Error updating company' }
+  }
+}
+
+export async function deleteCompany(companyId: string) {
+  try {
+    const user = await currentUser()
+
+    if (!user) {
+      return { status: 'error', error: 'Unauthorized' }
+    }
+
+    const deletedCompany = await prisma.company.delete({
+      where: {
+        id: companyId,
+        userId: user.id,
+      },
+    })
+
+    if (!deletedCompany) {
+      return { status: 'error', error: 'Company not found.' }
+    }
+
+    return { status: 'success', message: 'Company deleted successfully' }
+  } catch (error) {
+    return { status: 'error', error: 'Error deleting company' }
+  }
+}
