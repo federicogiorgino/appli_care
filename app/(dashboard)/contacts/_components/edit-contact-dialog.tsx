@@ -18,7 +18,6 @@ function EditContactDialog() {
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="text-2xl">Edit Contact</DialogTitle>
-          {/* <DialogDescription></DialogDescription> */}
         </DialogHeader>
         <EditContactForm />
       </DialogContent>

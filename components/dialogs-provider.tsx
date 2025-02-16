@@ -1,5 +1,6 @@
 import { EditCompanyDialog } from '@/app/(dashboard)/companies/_components/edit-company-dialog'
 import { EditContactDialog } from '@/app/(dashboard)/contacts/_components/edit-contact-dialog'
+import { EditResumeDialog } from '@/app/(dashboard)/resumes/_components/edit-resume-dialog'
 
 import { CreateCompanyForm } from './create-company-form'
 import { CreateContactForm } from './create-contact-form'
@@ -11,6 +12,7 @@ import { ControlledDialog } from './ui/controlled-dialog'
 function DialogsProvider() {
   return (
     <>
+      <EditResumeDialog />
       <EditContactDialog />
       <EditCompanyDialog />
       <ControlledDialog

@@ -64,3 +64,10 @@ export function capitalizeFirstLetter(string: string) {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join(' ')
 }
+
+export function truncateString(str: string) {
+  if (str.length > 10) {
+    return str.slice(0, 7) + '...'
+  }
+  return str
+}
