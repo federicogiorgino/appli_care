@@ -9,7 +9,7 @@ import {
   Users,
 } from 'lucide-react'
 
-import { FilterLabels, TableType } from '@/components/ui/data-table'
+import { FilterLabels, TableType } from '@/components/data-table'
 
 export const SIDEBAR_ITEMS = [
   {

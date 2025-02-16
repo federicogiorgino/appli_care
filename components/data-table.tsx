@@ -12,6 +12,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table'
+import { Plus } from 'lucide-react'
 import * as React from 'react'
 
 import { tableFilters } from '@/lib/const'
@@ -25,14 +26,16 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
-import { Button } from './button'
+import { DataTablePagination } from './data-table-pagination'
+import { Button } from './ui/button'
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from './dropdown-menu'
-import { Input } from './input'
+} from './ui/dropdown-menu'
+import { Input } from './ui/input'
+import useDialog from '@/hooks/use-dialog'
 
 export type FilterLabels = {
   [key: string]: string
@@ -55,6 +58,8 @@ function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   )
+
+  const { openDialog } = useDialog('contactCreateDialog')
 
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({})
@@ -81,7 +86,7 @@ function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div className="flex items-center py-4">
+      <div className="flex items-center justify-between py-4">
         <Input
           placeholder={`Filters ${type}`}
           value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
@@ -90,34 +95,59 @@ function DataTable<TData, TValue>({
           }
           className="max-w-sm"
         />
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild className="max-sm:hidden">
-            <Button variant="outline" className="ml-auto">
-              Filters
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => {
-                const customLabel = filters[column.id] || column.id
+        {
+          <div className="flex items-center justify-end gap-4">
+            <>
+              {type === 'contacts' && (
+                <Button variant="outline" onClick={openDialog}>
+                  <Plus /> Add New Contact
+                </Button>
+              )}
+              {type === 'resumes' && (
+                <Button variant="outline">
+                  <Plus /> Add New Resume
+                </Button>
+              )}
+              {type === 'coverLetters' && (
+                <Button variant="outline">
+                  <Plus /> Add New Cover Letter
+                </Button>
+              )}
+              {type === 'companies' && (
+                <Button variant="outline">
+                  <Plus /> Add New Company
+                </Button>
+              )}
+            </>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild className="max-sm:hidden">
+                <Button variant="outline" className="ml-auto">
+                  Filters
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                {table
+                  .getAllColumns()
+                  .filter((column) => column.getCanHide())
+                  .map((column) => {
+                    const customLabel = filters[column.id] || column.id
 
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    // className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
-                  >
-                    {customLabel}
-                  </DropdownMenuCheckboxItem>
-                )
-              })}
-          </DropdownMenuContent>
-        </DropdownMenu>
+                    return (
+                      <DropdownMenuCheckboxItem
+                        key={column.id}
+                        checked={column.getIsVisible()}
+                        onCheckedChange={(value) =>
+                          column.toggleVisibility(!!value)
+                        }
+                      >
+                        {customLabel}
+                      </DropdownMenuCheckboxItem>
+                    )
+                  })}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        }
       </div>
       <div className="rounded-md border">
         <Table>
@@ -169,24 +199,8 @@ function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          Previous
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          Next
-        </Button>
+      <div className="py-4">
+        <DataTablePagination table={table} />
       </div>
     </div>
   )

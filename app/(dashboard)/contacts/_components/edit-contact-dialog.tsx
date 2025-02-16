@@ -17,8 +17,8 @@ function EditContactDialog() {
     <Dialog open={isOpen} onOpenChange={closeDialog}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="text-2xl"></DialogTitle>
-          <DialogDescription></DialogDescription>
+          <DialogTitle className="text-2xl">Edit Contact</DialogTitle>
+          {/* <DialogDescription></DialogDescription> */}
         </DialogHeader>
         <EditContactForm />
       </DialogContent>

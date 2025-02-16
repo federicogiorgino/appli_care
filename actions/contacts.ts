@@ -78,7 +78,31 @@ export async function updateContact(data: ContactValues, contactId: string) {
     })
     return { status: 'success' }
   } catch (error) {
-    console.error(error)
     return { status: 'error', error: 'Error updating contact' }
+  }
+}
+
+export async function deleteContact(contactId: string) {
+  try {
+    const user = await currentUser()
+
+    if (!user) {
+      return { status: 'error', error: 'Unauthorized' }
+    }
+
+    const deletedContact = await prisma.contact.delete({
+      where: {
+        id: contactId,
+        userId: user.id,
+      },
+    })
+
+    if (!deletedContact) {
+      return { status: 'error', error: 'Contact not found.' }
+    }
+
+    return { status: 'success', message: 'Contact deleted successfully' }
+  } catch (error) {
+    return { status: 'error', error: 'Error deleting contact' }
   }
 }

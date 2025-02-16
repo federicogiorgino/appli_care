@@ -145,7 +145,7 @@ function EditContactForm() {
             Cancel
           </Button>
           <Button type="submit" disabled={mutation.isPending}>
-            {!mutation.isPending && 'Create'}
+            {!mutation.isPending && 'Edit'}
             {mutation.isPending && <Loader2 className="animate-spin" />}
           </Button>
         </div>

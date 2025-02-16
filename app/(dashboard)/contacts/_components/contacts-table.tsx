@@ -1,6 +1,6 @@
 'use client'
 
-import { DataTable } from '@/components/ui/data-table'
+import { DataTable } from '@/components/data-table'
 
 import { contactsColumns } from './contacts-columns'
 import { useContacts } from '@/hooks/use-contacts'
