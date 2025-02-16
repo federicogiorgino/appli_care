@@ -10,8 +10,8 @@ import * as z from 'zod'
 
 export const contactSchema = z.object({
   name: z.string().min(1, 'Name is required'),
-  email: z.string().email().optional(),
-  phoneNumber: z.string().min(10).max(15).optional(),
+  email: z.string().email(),
+  phoneNumber: z.string().optional(),
   role: z.enum([
     JobContactRole.RECRUITER,
     JobContactRole.INTERVIEWER,

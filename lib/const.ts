@@ -5,9 +5,12 @@ import {
   FileText,
   Home,
   House,
+  Mail,
   Settings,
   Users,
 } from 'lucide-react'
+
+import { FilterLabels, TableType } from '@/components/data-table'
 
 export const SIDEBAR_ITEMS = [
   {
@@ -32,7 +35,8 @@ export const SIDEBAR_ITEMS = [
   {
     name: 'Resources',
     items: [
-      { name: 'Documents', icon: FileText, href: '/documents' },
+      { name: 'Resumes', icon: FileText, href: '/resumes' },
+      { name: 'Cover Letters', icon: Mail, href: '/cover-letters' },
       { name: 'Contacts', icon: Users, href: '/contacts' },
       { name: 'Companies', icon: House, href: '/companies' },
     ],
@@ -60,4 +64,29 @@ export const JOB_LOCATION_COLORS = {
   ON_SITE: '#43A047', // Green
   HYBRID: '#8E24AA', // Purple
   OTHER: '#757575', // Grey
+}
+
+export const tableFilters: Record<TableType, FilterLabels> = {
+  contacts: {
+    name: 'Name',
+    email: 'Email',
+    phoneNumber: 'Phone',
+    role: 'Role',
+  },
+  companies: {
+    name: 'Name',
+    website: 'Website',
+    industry: 'Industry',
+    location: 'Location',
+    size: 'Size',
+  },
+  resumes: {
+    name: 'Name',
+    url: 'Source',
+  },
+  coverLetters: {
+    name: 'Name',
+    body: 'Body',
+  },
+  // jobApplications: {}
 }

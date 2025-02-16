@@ -53,3 +53,55 @@ export async function createResume(data: ResumeValues) {
     return { status: 'error', error: 'Error creating resume' }
   }
 }
+
+export async function updateResume(data: ResumeValues, contactId: string) {
+  try {
+    const user = await currentUser()
+
+    if (!user) {
+      return { status: 'error', error: 'Unauthorized' }
+    }
+
+    const validated = resumeSchema.safeParse(data)
+
+    if (!validated.success) {
+      return { status: 'error', error: validated.error.errors }
+    }
+
+    await prisma.resume.update({
+      where: {
+        id: contactId,
+        userId: user.id,
+      },
+      data: validated.data,
+    })
+    return { status: 'success' }
+  } catch (error) {
+    return { status: 'error', error: 'Error updating contact' }
+  }
+}
+
+export async function deleteResume(resumeId: string) {
+  try {
+    const user = await currentUser()
+
+    if (!user) {
+      return { status: 'error', error: 'Unauthorized' }
+    }
+
+    const deletedResume = await prisma.resume.delete({
+      where: {
+        id: resumeId,
+        userId: user.id,
+      },
+    })
+
+    if (!deletedResume) {
+      return { status: 'error', error: 'Resume not found.' }
+    }
+
+    return { status: 'success', message: 'Resume deleted successfully' }
+  } catch (error) {
+    return { status: 'error', error: 'Error deleting resume' }
+  }
+}
