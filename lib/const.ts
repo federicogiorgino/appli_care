@@ -17,17 +17,19 @@ export const SIDEBAR_ITEMS = [
     name: 'Overview',
     items: [
       { name: 'Dashboard', icon: Home, href: '/' },
-      // { name: 'Analytics', icon: BarChart2, href: '/analytics' },
       {
         name: 'Job Applications',
         icon: Briefcase,
-        href: '/applications',
+        href: '/job-applications',
         subItems: [
-          { name: 'All', href: '/applications' },
-          { name: 'Applied', href: '/applications/applied' },
-          { name: 'Interviewing', href: '/applications/interviewing' },
-          { name: 'Offered', href: '/applications/offered' },
-          { name: 'Rejected', href: '/applications/rejected' },
+          { name: 'All', href: '/job-applications' },
+          { name: 'Applied', href: '/job-applications?status=APPLIED' },
+          {
+            name: 'Interviewing',
+            href: '/job-applications?status=interviewing',
+          },
+          { name: 'Offered', href: '/job-applications?status=offered' },
+          { name: 'Rejected', href: '/job-applications?status=rejected' },
         ],
       },
     ],
@@ -36,7 +38,7 @@ export const SIDEBAR_ITEMS = [
     name: 'Resources',
     items: [
       { name: 'Resumes', icon: FileText, href: '/resumes' },
-      { name: 'Cover Letters', icon: Mail, href: '/cover-letters' },
+      // { name: 'Cover Letters', icon: Mail, href: '/cover-letters' },
       { name: 'Contacts', icon: Users, href: '/contacts' },
       { name: 'Companies', icon: House, href: '/companies' },
     ],

@@ -1,5 +1,9 @@
+'use client'
+
+import { JobApplicationStatus } from '@prisma/client'
 import { ChevronDown } from 'lucide-react'
 import Link from 'next/link'
+import { useQueryState } from 'nuqs'
 
 import { SIDEBAR_ITEMS } from '@/lib/const'
 
@@ -21,7 +25,28 @@ import {
   SidebarMenuSubItem,
 } from '@/components/ui/sidebar'
 
+const subItems = [
+  { label: 'All', value: '' },
+  { label: 'Applied', value: JobApplicationStatus.APPLIED },
+  {
+    label: 'Interviewing',
+    value: JobApplicationStatus.INTERVIEWING,
+  },
+  { label: 'Offered', value: JobApplicationStatus.OFFER },
+  { label: 'Rejected', value: JobApplicationStatus.REJECTED },
+]
+
 function NavContent() {
+  const [status, setStatus] = useQueryState('status', {
+    defaultValue: '' as JobApplicationStatus | string,
+    parse: (value) =>
+      Object.values(JobApplicationStatus).includes(
+        value as JobApplicationStatus
+      )
+        ? (value as JobApplicationStatus)
+        : '',
+    serialize: (value) => value,
+  })
   return (
     <SidebarContent>
       {SIDEBAR_ITEMS.map((category) => (
@@ -44,13 +69,16 @@ function NavContent() {
                       </CollapsibleTrigger>
                       <CollapsibleContent>
                         <SidebarMenuSub>
-                          {item.subItems.map((subItem) => (
+                          {subItems.map((subItem) => (
                             <SidebarMenuSubItem
-                              key={subItem.name}
+                              key={subItem.label}
                               className="ml-3"
                             >
-                              <SidebarMenuSubButton asChild>
-                                <Link href={subItem.href}>{subItem.name}</Link>
+                              <SidebarMenuSubButton
+                                asChild
+                                onClick={() => setStatus(subItem.value)}
+                              >
+                                <div>{subItem.label}</div>
                               </SidebarMenuSubButton>
                             </SidebarMenuSubItem>
                           ))}
