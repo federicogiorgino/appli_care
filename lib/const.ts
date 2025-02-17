@@ -1,14 +1,4 @@
-import {
-  BarChart2,
-  Bell,
-  Briefcase,
-  FileText,
-  Home,
-  House,
-  Mail,
-  Settings,
-  Users,
-} from 'lucide-react'
+import { Briefcase, FileText, Home, House, Users } from 'lucide-react'
 
 import { FilterLabels, TableType } from '@/components/data-table'
 

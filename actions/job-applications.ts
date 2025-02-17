@@ -119,3 +119,31 @@ export const getJobApplications = async (
     return { status: 'error', error: 'Error fetching recent job applications' }
   }
 }
+
+export async function deleteJobApplication(jobApplicationId: string) {
+  try {
+    const user = await currentUser()
+
+    if (!user) {
+      return { status: 'error', error: 'Unauthorized' }
+    }
+
+    const deletedJobApplication = await prisma.jobApplication.delete({
+      where: {
+        id: jobApplicationId,
+        userId: user.id,
+      },
+    })
+
+    if (!deletedJobApplication) {
+      return { status: 'error', error: 'Job application not found.' }
+    }
+
+    return {
+      status: 'success',
+      message: 'Job application deleted successfully',
+    }
+  } catch (error) {
+    return { status: 'error', error: 'Error deleting job application' }
+  }
+}
