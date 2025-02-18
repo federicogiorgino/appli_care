@@ -1,5 +1,6 @@
 import { currentUser } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
+import { Suspense } from 'react'
 
 import { MonthlyJobStats } from './_components/monthly-job-stats'
 import { RecentJobApplications } from './_components/recent-job-applications'
@@ -10,13 +11,15 @@ async function OverviewPage() {
   if (!user) redirect('/sign-in')
 
   return (
-    <div className="flex-1 space-y-8">
-      <MonthlyJobStats />
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-10">
-        <WeeklyJobApplicationsChart />
-        <RecentJobApplications />
+    <Suspense>
+      <div className="flex-1 space-y-8">
+        <MonthlyJobStats />
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-10">
+          <WeeklyJobApplicationsChart />
+          <RecentJobApplications />
+        </div>
       </div>
-    </div>
+    </Suspense>
   )
 }
 
