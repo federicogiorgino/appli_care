@@ -1,4 +1,5 @@
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
+import { Suspense } from 'react'
 
 import { AppSidebar } from '@/components/app-sidebar'
 import { DialogsProvider } from '@/components/dialogs-provider'
@@ -18,17 +19,19 @@ function DashboardLayout({
 }>) {
   return (
     <NuqsAdapter>
-      <SidebarProvider>
-        <AppSidebar variant="inset" />
-        <SidebarInset>
-          <main className="p-4">
-            <DialogsProvider />
-            <SidebarTrigger />
-            <TwIndicator />
-            <div className="px-0 pt-4">{children}</div>
-          </main>
-        </SidebarInset>
-      </SidebarProvider>
+      <Suspense>
+        <SidebarProvider>
+          <AppSidebar variant="inset" />
+          <SidebarInset>
+            <main className="p-4">
+              <DialogsProvider />
+              <SidebarTrigger />
+              <TwIndicator />
+              <div className="px-0 pt-4">{children}</div>
+            </main>
+          </SidebarInset>
+        </SidebarProvider>
+      </Suspense>
     </NuqsAdapter>
   )
 }
