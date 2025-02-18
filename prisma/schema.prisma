@@ -1,0 +1,152 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model JobApplication {
+  //BASIC DETAILS
+  id                String      @id @default(cuid())
+  jobTitle          String
+  jobType           JobType     @default(OTHER)
+  location          JobLocation @default(OTHER)
+  salaryExpectation String?
+  company           Company?    @relation(fields: [companyId], references: [id])
+  companyId         String?
+
+  //APPLICATION TRACKING
+  applicationDate     DateTime             @default(now())
+  applicationDeadline DateTime?
+  applicationStatus   JobApplicationStatus
+  source              String?
+  // resumeUsed          String?
+
+  resume   Resume? @relation(fields: [resumeId], references: [id])
+  resumeId String?
+
+  coverLetter   CoverLetter? @relation(fields: [coverLetterId], references: [id])
+  coverLetterId String?
+
+  //INTERVIEW DETAILS
+
+  contact        Contact? @relation(fields: [contactId], references: [id])
+  contactId      String?
+  interviewNotes String[]
+
+  interviewStage JobInterviewStage @default(OTHER)
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+
+  userId String @map("userId")
+
+  @@map("job_applications")
+}
+
+model Contact {
+  id          String         @id @default(cuid())
+  name        String
+  email       String
+  phoneNumber String?
+  role        JobContactRole @default(OTHER)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  userId String @map("userId")
+
+  jobApplications JobApplication[]
+
+  @@map("contacts")
+}
+
+model Company {
+  id        String         @id @default(cuid())
+  name      String
+  industry  String?
+  location  String?
+  website   String?
+  size      JobCompanySize @default(SMALL)
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  userId String @map("userId")
+
+  jobApplications JobApplication[]
+
+  @@map("companies")
+}
+
+model Resume {
+  id   String @id @default(cuid())
+  name String
+  url  String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId          String           @map("userId")
+  jobApplications JobApplication[]
+
+  @@map("resumes")
+}
+
+model CoverLetter {
+  id   String @id @default(cuid())
+  name String
+  body String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId          String           @map("userId")
+  jobApplications JobApplication[]
+
+  @@map("cover_letters")
+}
+
+enum JobType {
+  FULL_TIME
+  PART_TIME
+  CONTRACT
+  INTERNSHIP
+  FREELANCE
+  OTHER
+}
+
+enum JobApplicationStatus {
+  APPLIED
+  INTERVIEWING
+  OFFER
+  REJECTED
+}
+
+enum JobInterviewStage {
+  PHONE_SCREEN
+  TECHNICAL_INTERVIEW
+  ONSITE_INTERVIEW
+  FINAL_ROUND
+  OFFER
+  OTHER
+}
+
+enum JobCompanySize {
+  SMALL
+  MEDIUM
+  LARGE
+}
+
+enum JobContactRole {
+  RECRUITER
+  HIRING_MANAGER
+  INTERVIEWER
+  OTHER
+}
+
+enum JobLocation {
+  REMOTE
+  ON_SITE
+  HYBRID
+  OTHER
+}

@@ -1,25 +1,38 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { ClerkProvider } from '@clerk/nextjs'
+import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
+import { Toaster } from 'sonner'
 
-import "./globals.css";
+import { Providers } from '@/components/providers'
+import { ThemeProvider } from '@/components/theme-provider'
 
-const inter = Inter({ subsets: ["latin"] });
+import '@/app/globals.css'
+
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: "Reveala.xyz",
-  description: "The job seeker best friend",
-};
+  title: 'Applicare',
+  description: 'The job seeker best friend',
+}
 
 function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>{children}</body>
-    </html>
-  );
+    <ClerkProvider>
+      <html lang="en" suppressHydrationWarning>
+        <body className={inter.className}>
+          <Toaster className={inter.className} />
+
+          <Providers>
+            <ThemeProvider>{children}</ThemeProvider>
+          </Providers>
+        </body>
+      </html>
+    </ClerkProvider>
+  )
 }
 
-export default RootLayout;
+export default RootLayout
