@@ -3,6 +3,8 @@
 import { JobApplicationStatus } from '@prisma/client'
 import { ChevronDown } from 'lucide-react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useQueryState } from 'nuqs'
 
 import { SIDEBAR_ITEMS } from '@/lib/const'
@@ -37,6 +39,8 @@ const subItems = [
 ]
 
 function NavContent() {
+  const pathname = usePathname()
+  const router = useRouter()
   const [status, setStatus] = useQueryState('status', {
     defaultValue: '' as JobApplicationStatus | string,
     parse: (value) =>
@@ -47,6 +51,14 @@ function NavContent() {
         : '',
     serialize: (value) => value,
   })
+
+  const handleStatusChange = (value: string) => {
+    if (pathname === '/job-applications') {
+      setStatus(value)
+    } else {
+      router.push(`/job-applications?status=${value}`)
+    }
+  }
   return (
     <SidebarContent>
       {SIDEBAR_ITEMS.map((category) => (
@@ -61,10 +73,12 @@ function NavContent() {
                   {item.subItems ? (
                     <Collapsible defaultOpen>
                       <CollapsibleTrigger asChild>
-                        <SidebarMenuButton>
-                          <item.icon className="mr-3" size={20} />
-                          {item.name}
-                          <ChevronDown className="ml-auto h-4 w-4" />
+                        <SidebarMenuButton asChild>
+                          <Link href={item.href}>
+                            <item.icon className="mr-3" size={20} />
+                            {item.name}
+                            <ChevronDown className="ml-auto h-4 w-4" />
+                          </Link>
                         </SidebarMenuButton>
                       </CollapsibleTrigger>
                       <CollapsibleContent>
@@ -76,7 +90,10 @@ function NavContent() {
                             >
                               <SidebarMenuSubButton
                                 asChild
-                                onClick={() => setStatus(subItem.value)}
+                                onClick={() =>
+                                  handleStatusChange(subItem.value)
+                                }
+                                // onClick={() => setStatus(subItem.value)}
                               >
                                 <div>{subItem.label}</div>
                               </SidebarMenuSubButton>

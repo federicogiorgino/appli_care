@@ -5,8 +5,14 @@ import { JobApplicationStatus, Prisma } from '@prisma/client'
 
 import { prisma } from '@/lib/prisma'
 
-import { jobApplicationSchema } from '@/schemas/job-application'
-import { JobApplicationValues } from '@/types/job-application'
+import {
+  editJobApplicationSchema,
+  jobApplicationSchema,
+} from '@/schemas/job-application'
+import {
+  EditJobApplicationValues,
+  JobApplicationValues,
+} from '@/types/job-application'
 
 export async function createJobApplication(data: JobApplicationValues) {
   try {
@@ -105,6 +111,7 @@ export const getJobApplications = async (
           company: true,
           contact: true,
           resume: true,
+          coverLetter: true,
         },
       }),
       prisma.jobApplication.count({ where }),
@@ -145,5 +152,36 @@ export async function deleteJobApplication(jobApplicationId: string) {
     }
   } catch (error) {
     return { status: 'error', error: 'Error deleting job application' }
+  }
+}
+
+export async function updateJobApplication(
+  data: JobApplicationValues,
+  jobApplicationId: string
+) {
+  try {
+    const user = await currentUser()
+
+    if (!user) {
+      return { status: 'error', error: 'Unauthorized' }
+    }
+
+    const validated = jobApplicationSchema.safeParse(data)
+
+    if (!validated.success) {
+      return { status: 'error', error: validated.error.errors }
+    }
+
+    console.log(data)
+    await prisma.jobApplication.update({
+      where: {
+        id: jobApplicationId,
+        userId: user.id,
+      },
+      data: validated.data,
+    })
+    return { status: 'success' }
+  } catch (error) {
+    return { status: 'error', error: 'Error updating job application' }
   }
 }

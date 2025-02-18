@@ -66,7 +66,7 @@ export function capitalizeFirstLetter(string: string) {
 }
 
 export function truncateString(str: string, truncation?: number) {
-  if (str.length > 10) {
+  if (str.length > 10 && truncation && str.length > truncation) {
     return str.slice(0, truncation ?? 7) + '...'
   }
   return str
