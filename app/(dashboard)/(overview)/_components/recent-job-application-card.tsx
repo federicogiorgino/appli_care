@@ -19,7 +19,6 @@ type RecentJobApplicationCardProps = {
 function RecentJobApplicationCard({
   jobApplication,
 }: RecentJobApplicationCardProps) {
-  const { applicationDate, applicationDeadline } = jobApplication
   return (
     <div className="flex items-center justify-between gap-4 border-b border-border pb-4 last:border-b-0">
       <div className="flex flex-col justify-between gap-4">
@@ -50,9 +49,9 @@ function RecentJobApplicationCard({
       <div className="flex items-center gap-2 text-sm text-muted-foreground">
         <Calendar className="h-4 w-4" />
         <span>
-          {applicationDeadline
-            ? `Deadline: ${applicationDeadline.toLocaleDateString()}`
-            : `Applied: ${applicationDate.toLocaleDateString()}`}
+          {jobApplication.applicationDeadline
+            ? `Deadline: ${format(jobApplication.applicationDeadline, 'MMM d, yyyy')}`
+            : `Applied: ${format(jobApplication.applicationDate, 'MMM d, yyyy')}`}
         </span>
       </div>
     </div>

@@ -1,3 +1,5 @@
+import { NuqsAdapter } from 'nuqs/adapters/next/app'
+
 import { AppSidebar } from '@/components/app-sidebar'
 import { DialogsProvider } from '@/components/dialogs-provider'
 import { TwIndicator } from '@/components/tw-indicator'
@@ -15,17 +17,19 @@ function DashboardLayout({
   children: React.ReactNode
 }>) {
   return (
-    <SidebarProvider>
-      <AppSidebar variant="inset" />
-      <SidebarInset>
-        <main className="p-4">
-          <DialogsProvider />
-          <SidebarTrigger />
-          <TwIndicator />
-          <div className="px-4 pt-4">{children}</div>
-        </main>
-      </SidebarInset>
-    </SidebarProvider>
+    <NuqsAdapter>
+      <SidebarProvider>
+        <AppSidebar variant="inset" />
+        <SidebarInset>
+          <main className="p-4">
+            <DialogsProvider />
+            <SidebarTrigger />
+            <TwIndicator />
+            <div className="px-0 pt-4">{children}</div>
+          </main>
+        </SidebarInset>
+      </SidebarProvider>
+    </NuqsAdapter>
   )
 }
 

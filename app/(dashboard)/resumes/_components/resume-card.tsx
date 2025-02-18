@@ -97,12 +97,8 @@ function ResumCard({ resume }: ResumeCardProps) {
 
 function ResumeCardSkeleton() {
   return (
-    <Card className="relative">
-      <CardHeader className="pb-2">
-        <div className="absolute right-2 top-2">
-          <Skeleton className="h-8 w-8 rounded-full" />
-        </div>
-      </CardHeader>
+    <Card className="">
+      <CardHeader className="pb-2"></CardHeader>
       <CardContent className="flex flex-col items-center pt-2">
         <Skeleton className="mb-4 h-24 w-24 rounded" />
         <Skeleton className="mb-2 h-6 w-3/4" />

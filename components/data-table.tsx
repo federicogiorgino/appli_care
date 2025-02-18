@@ -105,22 +105,14 @@ function DataTable<TData, TValue>({
             <>
               {type === 'contacts' && (
                 <Button variant="outline" onClick={openContactCreatDialog}>
-                  <Plus /> Add New Contact
-                </Button>
-              )}
-              {type === 'resumes' && (
-                <Button variant="outline" onClick={openContactCreatDialog}>
-                  <Plus /> Add New Resume
-                </Button>
-              )}
-              {type === 'coverLetters' && (
-                <Button variant="outline" onClick={openContactCreatDialog}>
-                  <Plus /> Add New Cover Letter
+                  <Plus />
+                  <span className="hidden md:block"> Add New Contact</span>
                 </Button>
               )}
               {type === 'companies' && (
                 <Button variant="outline" onClick={openCompanyCreateDialog}>
-                  <Plus /> Add New Company
+                  <Plus />
+                  <span className="hidden md:block"> Add New Company</span>
                 </Button>
               )}
             </>
